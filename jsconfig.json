@@ -4,8 +4,9 @@
     "experimentalDecorators": true,
     "baseUrl": "./",
     "paths": {
-      "routes/*": ["src/client/routes/*"],
-      "components/*": ["src/client/components/*"],
+      "@url": ["src/shared/url.js"],
+      "routes/*": ["src/shared/routes/*"],
+      "components/*": ["src/shared/components/*"],
       "@/*": ["src/*"]
     }
   },

@@ -5,6 +5,7 @@ const ASSETS = `cache${TIMESTAMP}`;
 const assetsPath = "/assets.json";
 let to_cache = [];
 let staticAssets = new Set([]);
+const routes = Object.values(ROUTES);
 
 async function getStaticAssetsList() {
   if (!staticAssets.size) {
@@ -27,6 +28,7 @@ async function getStaticAssetsList() {
           },
           []
         );
+
         to_cache = staticFiles;
         staticAssets = new Set(staticFiles);
         return to_cache;
@@ -39,10 +41,7 @@ async function getStaticAssetsList() {
 self.addEventListener("install", (event) => {
   event.waitUntil(
     Promise.all([getStaticAssetsList(), caches.open(ASSETS)])
-      .then(
-        ([staticAssets, cache]) =>
-          console.log(staticAssets) || cache.addAll(staticAssets)
-      )
+      .then(([staticAssets, cache]) => cache.addAll(staticAssets))
       .then(() => {
         self.skipWaiting();
       })
@@ -104,13 +103,15 @@ self.addEventListener("fetch", (event) => {
         const cachedAsset =
           isStaticAsset && (await caches.match(event.request));
         // for pages, you might want to serve a shell `service-worker-index.html` file,
-        // which Sapper has generated for you. It's not right for every
-        // app, but if it's right for yours then uncomment this section
-        /*
-				if (!cachedAsset && url.origin === self.origin && routes.find(route => route.pattern.test(url.pathname))) {
-					return caches.match('/service-worker-index.html');
-				}
-				*/
+        if (
+          !cachedAsset &&
+          url.origin === self.origin &&
+          routes.find((route) =>
+            new RegExp("^" + route + "$").test(url.pathname)
+          )
+        ) {
+          return caches.match("/service-worker-index.html");
+        }
 
         return cachedAsset || fetchAndCache(event.request);
       })()

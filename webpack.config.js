@@ -5,6 +5,7 @@ const appRootDir = require("app-root-dir");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AssetsPlugin = require("assets-webpack-plugin");
 const alias = require("./configs/alias.config");
+const ROUTES = require("./src/shared/url");
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
@@ -17,7 +18,7 @@ const mainFields = ["svelte", "module", "browser", "main"];
 module.exports = [
   {
     name: "client",
-    entry: path.resolve(appRootDir.get(), "src", "main.js"),
+    entry: path.resolve(appRootDir.get(), "src", "client", "main.js"),
     output: {
       path: path.resolve(appRootDir.get(), "dist"),
       filename: "main.js",
@@ -64,7 +65,17 @@ module.exports = [
         "process.browser": true,
         "process.env.NODE_ENV": JSON.stringify(mode),
       }),
-      new CopyWebpackPlugin(["public"]),
+      new CopyWebpackPlugin([
+        "public",
+        {
+          from: "public/index.html",
+          to: "service-worker-index.html",
+          transform(content) {
+            // replace any {{ }} because that is jinja specific stuff and will be displayed as is when plainly served in html
+            return content.toString().replace(/{{(.+)}}/g, "");
+          },
+        },
+      ]),
       new MiniCssExtractPlugin({
         filename: "bundle.css",
         chunkFilename: dev ? "[id].css" : "[id].[hash].css",
@@ -94,6 +105,7 @@ module.exports = [
     plugins: [
       new webpack.DefinePlugin({
         TIMESTAMP: new Date().getTime(),
+        ROUTES: JSON.stringify(ROUTES),
       }),
     ],
   },

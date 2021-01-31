@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV === "development";
 // client use webpack, because when rendering, for some reason, require is not defined; babel did not work
 export default [
   {
-    input: "src/client/App.svelte",
+    input: "src/shared/App.svelte",
     output: {
       sourcemap: false,
       format: "cjs",
