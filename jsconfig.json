@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "routes/*": ["src/client/routes/*"],
+      "components/*": ["src/client/components/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  "exclude": ["bin", "dist", "files", "node_modules"]
+}
