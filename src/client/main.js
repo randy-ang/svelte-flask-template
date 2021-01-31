@@ -1,4 +1,4 @@
-import App from "./client/App.svelte";
+import App from "../shared/App.svelte";
 
 if ("serviceWorker" in navigator)
   navigator.serviceWorker.register("/service-worker.js");
