@@ -19,3 +19,8 @@ Currently, there are still some bugs with this example:
 There are also still some TODOs:
 
 - create a separate script for webpack (or rollup) watch mode for easier dev development
+
+References: 
+- https://github.com/sveltejs/sapper
+- https://github.com/cabreraalex/svelte-flask-example
+- https://github.com/mefechoel/svelte-navigator/tree/main/example/ssr
