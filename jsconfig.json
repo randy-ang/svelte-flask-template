@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@url": ["src/shared/url.js"],
+      "routes/*": ["src/shared/routes/*"],
+      "components/*": ["src/shared/components/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  "exclude": ["bin", "dist", "files", "node_modules"]
+}
