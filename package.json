@@ -41,8 +41,7 @@
     "build:dev": "bnr build:dev",
     "build:production": "bnr build:production",
     "clean": "rm -rf dist && rm -rf src/server/renderer/build",
-    "serve": "gunicorn src.app:app",
-    "install": "python -m venv vflask && source vflask/bin/activate && pip install -r ./requirements.txt"
+    "serve": "gunicorn src.app:app"
   },
   "betterScripts": {
     "build:dev": {
